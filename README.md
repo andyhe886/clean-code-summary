@@ -1,6 +1,51 @@
 # clean-code-summary
 Clean code: a Handbook of Agile Software Craftmanship by Robert C. Martin Series
 
+## Meaningful names
+
+### Use Intentional-Revealing Names
+The name of a variable, function, or class. It should tell why it exists, what it does, how it is used. Usually it doesn't need to have comment.
+
+**Example**
+```
+    public List<int[]> getThem() {
+        List<int[]> list1 = new ArrayList<int[]>();
+        for (int[] x : theList)
+            if (x[] x : theList)
+                list1.add(x);
+        return list1;
+    }
+```
+
+Question to ask:
+
+    1.What kinds of things are in theList?
+    2.What is the significance of the zeroth subscript of an item in theList?
+    3.What is the significance of the value 4?
+    4.How would I use the list being returned?
+    
+It can become more easier to read
+```
+    public List<int[]> getFlaggedCells() {
+        List<int[]> flaggedCells = new ArrayList<int[]>();
+        for (int[] cell : gameboard)
+            if(cell[STATUS_VALUE] == FLAGGED)
+                flaggedCells.add(cell);
+        return flaggedCells;
+    }
+```
+
+##Avoid disinformation
+Example: do not refer to a grouping of accounts as an accountList unless it's actually a list
+##Make Meaningful distinctions
+Example: Number-series naming (a1, a2, ... aN) is the opposite of intentional naming and Noise words are another meaningless distinction.
+##Use searchable names
+Example: Grep MAX_CLASSES_PER_STUDENT
+##Class names
+Classes and objects should have noun or noun phrase like Customer, WikiPage, Account, and AddressParser. Avoid words like Manager, Processor, Data, or Info in the name of a class.
+##Method Names
+Methods should have verb or verb phrase names like postPayment, deletePage, or save. 
+
 ## Unit Tests
 
 ### The Three Laws of TDD
