@@ -36,13 +36,17 @@ It can become more easier to read
 ```
 
 ##Avoid disinformation
-Example: do not refer to a grouping of accounts as an accountList unless it's actually a list
+Example: do not refer to a grouping of accounts as an accountList unless it's actually a list.
+
 ##Make Meaningful distinctions
 Example: Number-series naming (a1, a2, ... aN) is the opposite of intentional naming and Noise words are another meaningless distinction.
+
 ##Use searchable names
 Example: Grep MAX_CLASSES_PER_STUDENT
+
 ##Class names
 Classes and objects should have noun or noun phrase like Customer, WikiPage, Account, and AddressParser. Avoid words like Manager, Processor, Data, or Info in the name of a class.
+
 ##Method Names
 Methods should have verb or verb phrase names like postPayment, deletePage, or save. 
 
