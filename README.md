@@ -50,6 +50,100 @@ Classes and objects should have noun or noun phrase like Customer, WikiPage, Acc
 ### Method Names
 Methods should have verb or verb phrase names like postPayment, deletePage, or save. 
 
+## Functions
+
+### Do One Thing
+_FUNCTIONS SHOULD DO ONE THING. THEY SHOULD DO IT WELL. THEY SHOULD DO IT ONLY._
+
+### Reading Code from Top to Bottom: _The Stepdown Rule_
+
+Read code like top-down narrative, every function should be followed by those at the next level of abstraction. TO paragraph that describe the current level of abstraction.
+
+Example: 
+
+    To do something, we include setup and teardown, we include setups, then we include test content, and then we include teardown.
+        To include the setups, we include the suite setup
+        To include Test content
+        To include teardown
+        
+### Switch Statements
+By nature, _switch_ statements always do _N_ things. Often _polymorphism_, we can make sure that each _switch_ statement is buried in a low-level class and is never repeated.
+
+```
+    public Money calculatePay(Employee e) throws InvalidEmployeeType {
+        switch (e.type) {
+            case: COMMISIONNED:
+                return calculateCommissionPay(e);
+            case: HOURLY:
+                return calculateHourlyPay(e);
+            case: SALARIED:
+                return calculateSalariedPay(e);
+            default:
+                throw new InvalidEmployeeType(e.type);
+        }
+    }
+```
+
+    1.It's large, and when new employee types are added, it will grow
+    2.It does more than one thing
+    3.Violates the Single Responsibility Principle (SRP)
+    4.Violates the Open Closed Principle
+    5.Unlimited number of other functions that will have the same structure
+
+To fix this mess: the general rule
+```
+    public abstract class Employee {
+        public abstract boolean isPayday();
+        public abstract Money calculatePay();
+        public abstract void deliverPay(Money pay);
+    }
+    
+    public interface EmployeeFactory {
+        public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
+    }
+    
+    public class EmployeeFactoryImpl implements EmployeeFactory {
+        public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType {
+            switch(r.type) {
+                case COMMISSIONED:
+                    return new CommnissionedEmployee(r);
+                case HOURLY: 
+                    return new HourlyEmployee(r);
+                case SALARIED: 
+                    return new SalariedEmployee(r);
+                default:
+                    throw new InvalidEmployeeType(r.type);
+            }
+        }
+    }
+```
+
+### Use Descriptive Names
+A long descriptive name is better than a short enigmatic name or comment. Be consistent in your names. Use the same phrases, nouns, and verbs in the names you choose for your modules.
+
+### Function Arguments
+The ideal number of arguments for a function is zero(niladic), one(monadic), two(dyadic), three(triadic) should be avoided where possible. More than three(polyadic) requires very special justification.
+
+Arguments are even harder from a testing point of view. Imagine the difficulty of writing all the test cases to ensure that all various combinations of arguments work properly.
+
+### Flag arguments
+
+Flag argument are ugly. Passing a boolean into a function is a truly terrible practice.
+
+### Have No Side Effects
+
+```
+    public boolean checkPassword(String userName, String password) {
+        ...
+        if ("Valid Password".equals(phrase)) {
+            Session.initialize();
+            return true;
+        }
+    }
+```
+
+The side effect is called sessions.initialize(). Function should rename to checkPasswordAndInitializeSession.
+
 ## Unit Tests
 
 ### The Three Laws of TDD
