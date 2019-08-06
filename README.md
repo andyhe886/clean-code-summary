@@ -144,6 +144,32 @@ Flag argument are ugly. Passing a boolean into a function is a truly terrible pr
 
 The side effect is called sessions.initialize(). Function should rename to checkPasswordAndInitializeSession.
 
+## Comments
+Code changes and evolves, Chunk of it move from here to there. Those chunks bifurcate and reproduce and come together again to form chimeras. Unfortunately the comments don't always follow them.
+ 
+### Comments Do Not Make Up for Bad Code
+Writing comments is for bad code, Clear and expressive code with few comments is way better than cluttered and complex code with lots of comments.
+
+### Informative Comments
+```
+    // format matched kk:mm:ss EEE, MMM dd, yyyy
+    PAttern timeMatcher = Pattern.compile(
+    "\\d*:\\d*:\\d* \\w*, \\w* \\d*, \\d*");
+```
+
+In this case the comment lets us know that the regular expression is intended to match a time and a date that were formatted with SimpleDateFormat.format function using the specified format string.
+
+### TODOs Comments
+
+```
+    //TODO-MdM these are not needed
+    // We expect this to go away when we do the checkout model
+    protected VersionInfo makeVersion() throws exception {
+        return null;
+    }
+```
+
+TODOs are jobs that the programmer thinks should be done, but for some reason can't do at the moment. It might be a reminder to delete a deprecated feature or a plea for someone else to look at the problem.
 ## Unit Tests
 
 ### The Three Laws of TDD
